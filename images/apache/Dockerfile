@@ -1,7 +1,7 @@
 #
 # Final image
 #
-FROM php:7.3-apache
+FROM php:7.4-apache
 
 #
 # Variables
@@ -16,10 +16,10 @@ RUN \
   apt-get update && \
   apt-get install -y git zip libpng-dev libjpeg-dev libzip-dev libfreetype6-dev libxml2-dev libmagickwand-dev rsync && \
   rm -rf /var/lib/apt/lists/* && \
-  docker-php-ext-configure zip --with-libzip && \
-  docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ && \
+  docker-php-ext-configure zip --with-zip && \
+  docker-php-ext-configure gd --with-freetype --with-jpeg && \
   docker-php-ext-install gd zip exif pdo pdo_mysql xml fileinfo mysqli && \
-  pecl install imagick && pecl install redis && \
+  yes | pecl install imagick && pecl install redis && \
   docker-php-ext-enable imagick && docker-php-ext-enable redis
 
 #
